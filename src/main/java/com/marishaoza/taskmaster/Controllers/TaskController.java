@@ -7,7 +7,6 @@ import com.marishaoza.taskmaster.Repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.LinkedList;
 import java.util.List;
 
 @RestController
@@ -25,10 +24,7 @@ public class TaskController {
 
     @PostMapping("/tasks")
     public Task addNewUser (@RequestBody Task task) {
-        Task newTask = new Task();
-        newTask.setTitle(task.getTitle());
-        newTask.setDescription(task.getDescription());
-        newTask.setStatus("Available");
+        Task newTask = new Task(task.getId(), task.getTitle(), task.getDescription(), "Available", null);
         newTask.addHistory(new HistoryObj("Task created"));
         taskRepository.save(newTask);
         return newTask;
