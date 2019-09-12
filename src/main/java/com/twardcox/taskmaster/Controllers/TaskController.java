@@ -1,13 +1,12 @@
-package com.marishaoza.taskmaster.Controllers;
+package com.twardcox.taskmaster.Controllers;
 
 
-import com.marishaoza.taskmaster.Models.HistoryObj;
-import com.marishaoza.taskmaster.Models.Task;
-import com.marishaoza.taskmaster.Repository.TaskRepository;
+import com.twardcox.taskmaster.Models.HistoryObj;
+import com.twardcox.taskmaster.Models.Task;
+import com.twardcox.taskmaster.Repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.LinkedList;
 import java.util.List;
 
 @RestController
@@ -29,7 +28,7 @@ public class TaskController {
         newTask.setTitle(task.getTitle());
         newTask.setDescription(task.getDescription());
         newTask.setStatus("Available");
-        newTask.addHistory(new HistoryObj("Task created"));
+        newTask.addHistory(new HistoryObj(newTask.getStatus()));
         taskRepository.save(newTask);
         return newTask;
     }

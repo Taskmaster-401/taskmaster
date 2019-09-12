@@ -1,6 +1,6 @@
-package com.marishaoza.taskmaster.Repository;
+package com.twardcox.taskmaster.Repository;
 
-import com.marishaoza.taskmaster.Models.Task;
+import com.twardcox.taskmaster.Models.Task;
 import org.socialsignin.spring.data.dynamodb.repository.EnableScan;
 import org.springframework.data.repository.CrudRepository;
 

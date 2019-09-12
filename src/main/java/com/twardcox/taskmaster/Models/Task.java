@@ -1,8 +1,7 @@
-package com.marishaoza.taskmaster.Models;
+package com.twardcox.taskmaster.Models;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 
@@ -15,7 +14,7 @@ public class Task {
     private String status;
     private String assignee;
 
-    private List<String> history;
+    private List<HistoryObj> history;
 
     public Task() {
         this.history = new ArrayList<>();
@@ -65,10 +64,10 @@ public class Task {
     }
 
     @DynamoDBAttribute
-    public List<String> getHistory() {
+    public List<HistoryObj> getHistory() {
         return this.history;
     }
-    public void setHistory(List<String> history) {
+    public void setHistory(List<HistoryObj> history) {
         this.history = history;
     }
 
@@ -76,7 +75,7 @@ public class Task {
     // ---------------- Methods ----------------
 
     public void addHistory(HistoryObj historyObj) {
-        this.history.add(historyObj.toString());
+        this.history.add(historyObj);
     }
 
 }

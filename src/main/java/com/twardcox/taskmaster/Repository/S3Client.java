@@ -1,4 +1,4 @@
-package com.marishaoza.taskmaster.Repository;
+package com.twardcox.taskmaster.Repository;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;

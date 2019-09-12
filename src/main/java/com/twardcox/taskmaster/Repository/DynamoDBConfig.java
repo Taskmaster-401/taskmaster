@@ -1,4 +1,4 @@
-package com.marishaoza.taskmaster.Repository;
+package com.twardcox.taskmaster.Repository;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSCredentialsProvider;
@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@EnableDynamoDBRepositories(basePackages = "com.marishaoza.taskmaster")
+@EnableDynamoDBRepositories(basePackages = "com.twardcox.taskmaster")
 public class DynamoDBConfig {
 
     @Value("${amazon.dynamodb.endpoint}")

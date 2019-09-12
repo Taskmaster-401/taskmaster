@@ -16,3 +16,9 @@
 * PUT: `/api/v1/tasks/{id}/state` - takes in a task `id` as a path variable, and updates that task to the next status.
     * Statuses progress from:  `Available` -> `Assigned` -> `Accepted` -> `Finished`.
 * PUT: `/api/v1/tasks/{id}/assign/{assignee}` - assigns a task to an assignee
+
+## Collaborators
+* Marisha Hosa
+* Renee Messick
+* Kevin Couture
+* Travis Cox

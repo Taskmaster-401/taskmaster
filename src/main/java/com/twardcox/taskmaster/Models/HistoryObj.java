@@ -1,23 +1,26 @@
-package com.marishaoza.taskmaster.Models;
+package com.twardcox.taskmaster.Models;
 
-import java.sql.Timestamp;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBDocument;
+
 import java.util.Date;
 
+@DynamoDBDocument
 public class HistoryObj {
-    Timestamp time;
+    String time;
     String action;
 
     public HistoryObj(String action){
         this.action = action;
-        Date date = new Date();
-        this.time = new Timestamp(date.getTime());
+        this.time = new Date(System.currentTimeMillis()).toString();
     }
 
-    public Timestamp getTime() {
+    public HistoryObj(){};
+
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Timestamp time) {
+    public void setTime(String time) {
         this.time = time;
     }
 

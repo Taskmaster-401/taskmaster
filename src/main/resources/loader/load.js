@@ -18,10 +18,10 @@ const addRecord = (record) => {
     TableName: 'taskmaster',
     Item: {
       'id': uuid(),
-      'assigned': faker.name.firstName(),
-      'complete': faker.random.boolean().toString(),
-      'foobar': faker.name.lastName(),
-      'stuff': [faker.name.firstName(), faker.name.lastName()]
+      'title': faker.name.firstName(),
+      'description': faker.random.boolean().toString(),
+      'status': faker.name.lastName(),
+      'assignee': [faker.name.firstName(), faker.name.lastName()]
     }
   };
 

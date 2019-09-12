@@ -1,4 +1,4 @@
-package com.marishaoza.taskmaster;
+package com.twardcox.taskmaster;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

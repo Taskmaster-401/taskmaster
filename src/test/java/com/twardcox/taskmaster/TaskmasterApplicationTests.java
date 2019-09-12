@@ -1,4 +1,4 @@
-package com.marishaoza.taskmaster;
+package com.twardcox.taskmaster;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
