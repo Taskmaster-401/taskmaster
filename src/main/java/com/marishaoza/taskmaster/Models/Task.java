@@ -12,17 +12,19 @@ public class Task {
     private String description;
     private String status;
     private String assignee;
+    private String imgUrl;
 
     private ArrayList<HistoryObj> history;
 
     public Task() {}
 
-    public Task(String id, String title, String description, String status, String assignee) {
+    public Task(String id, String title, String description, String status, String assignee, String imgUrl) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.status = status;
         this.assignee = assignee;
+        this.imgUrl = imgUrl;
         this.history = new ArrayList<>();
     }
 
@@ -77,11 +79,29 @@ public class Task {
         this.history = history;
     }
 
+    @DynamoDBAttribute
+    public String getImgUrl() {
+        return this.imgUrl;
+    }
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
 
     // ---------------- Methods ----------------
 
     public void addHistory(HistoryObj historyObj) {
         this.history.add(historyObj);
+    }
+
+    public void updateStatus() {
+        if (this.status.equals("Available")) {
+            this.status = "Assigned";
+        } else if (this.status.equals("Assigned")) {
+            this.status = "Accepted";
+        } else if (this.status.equals("Accepted")) {
+            this.status = "Finished";
+        }
     }
 
 }

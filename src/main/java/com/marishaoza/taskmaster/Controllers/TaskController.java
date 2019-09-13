@@ -3,9 +3,11 @@ package com.marishaoza.taskmaster.Controllers;
 
 import com.marishaoza.taskmaster.Models.HistoryObj;
 import com.marishaoza.taskmaster.Models.Task;
+import com.marishaoza.taskmaster.Repository.S3Client;
 import com.marishaoza.taskmaster.Repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -17,6 +19,13 @@ public class TaskController {
     @Autowired
     TaskRepository taskRepository;
 
+    private S3Client s3Client;
+
+    @Autowired
+    TaskController(S3Client s3Client) {
+        this.s3Client = s3Client;
+    }
+
     @GetMapping("/tasks")
     public List<Task> getTasks() {
         return (List) taskRepository.findAll();
@@ -24,7 +33,7 @@ public class TaskController {
 
     @PostMapping("/tasks")
     public Task addNewUser (@RequestBody Task task) {
-        Task newTask = new Task(task.getId(), task.getTitle(), task.getDescription(), "Available", null);
+        Task newTask = new Task(task.getId(), task.getTitle(), task.getDescription(), "Available", task.getAssignee(), task.getImgUrl());
         newTask.addHistory(new HistoryObj("Task created"));
         taskRepository.save(newTask);
         return newTask;
@@ -33,17 +42,11 @@ public class TaskController {
     @PutMapping("/tasks/{id}/state")
     public Task updateTaskStatus (@PathVariable String id) {
         Task taskToUpdate = taskRepository.findById(id).get();
-        if (taskToUpdate.getStatus().equals("Available")) {
-            taskToUpdate.setStatus("Assigned");
-        } else if (taskToUpdate.getStatus().equals("Assigned")) {
-            taskToUpdate.setStatus("Accepted");
-        } else if (taskToUpdate.getStatus().equals("Accepted")) {
-            taskToUpdate.setStatus("Finished");
-        } else if (taskToUpdate.getStatus().equals("Finished")) {
-            return taskToUpdate;
+        if (!taskToUpdate.getStatus().equals("Finished")) {
+            taskToUpdate.updateStatus();
+            taskToUpdate.addHistory(new HistoryObj("--> " + taskToUpdate.getStatus()));
+            taskRepository.save(taskToUpdate);
         }
-        taskToUpdate.addHistory(new HistoryObj("--> " + taskToUpdate.getStatus()));
-        taskRepository.save(taskToUpdate);
         return taskToUpdate;
     }
 
@@ -58,6 +61,15 @@ public class TaskController {
         taskToUpdate.setAssignee(assignee);
         taskToUpdate.setStatus("Assigned");
         taskToUpdate.addHistory(new HistoryObj("--> Assigned to " + assignee));
+        taskRepository.save(taskToUpdate);
+        return taskToUpdate;
+    }
+
+    @PutMapping("/tasks/{id}/images")
+    public Task updateTaskImage(@PathVariable String id, @RequestPart(value = "file") MultipartFile file) {
+        Task taskToUpdate = taskRepository.findById(id).get();
+        String pic = this.s3Client.uploadFile(file);
+        taskToUpdate.setImgUrl(pic);
         taskRepository.save(taskToUpdate);
         return taskToUpdate;
     }
