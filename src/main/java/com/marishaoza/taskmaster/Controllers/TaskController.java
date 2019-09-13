@@ -33,7 +33,7 @@ public class TaskController {
 
     @PostMapping("/tasks")
     public Task addNewUser (@RequestBody Task task) {
-        Task newTask = new Task(task.getId(), task.getTitle(), task.getDescription(), "Available", task.getAssignee(), task.getImgUrl());
+        Task newTask = new Task(task.getId(), task.getTitle(), task.getDescription(), "Available", task.getAssignee(), null);
         newTask.addHistory(new HistoryObj("Task created"));
         taskRepository.save(newTask);
         return newTask;
@@ -65,7 +65,7 @@ public class TaskController {
         return taskToUpdate;
     }
 
-    @PutMapping("/tasks/{id}/images")
+    @PostMapping("/tasks/{id}/images")
     public Task updateTaskImage(@PathVariable String id, @RequestPart(value = "file") MultipartFile file) {
         Task taskToUpdate = taskRepository.findById(id).get();
         String pic = this.s3Client.uploadFile(file);

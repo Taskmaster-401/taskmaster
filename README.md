@@ -16,3 +16,4 @@
 * PUT: `/api/v1/tasks/{id}/state` - takes in a task `id` as a path variable, and updates that task to the next status.
     * Statuses progress from:  `Available` -> `Assigned` -> `Accepted` -> `Finished`.
 * PUT: `/api/v1/tasks/{id}/assign/{assignee}` - assigns a task to an assignee
+* POST: `/api/v1/tasks/{id}/images` - uploads an image to s3 and adds the url to the task
